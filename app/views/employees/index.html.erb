@@ -43,7 +43,7 @@
               <td><%= employee.phone %></td>
               <td>
                 <div class="action-buttons">
-                  <%= link_to 'Edit', '#', onclick: "fillForm('#{employee.id}', '#{employee.name}', '#{employee.email}', '#{employee.phone}')", class: 'btn btn-edit' %>
+                  <button onclick="fillForm('<%= employee.id %>', '<%= employee.name %>', '<%= employee.email %>', '<%= employee.phone %>')" class="btn btn-edit">Edit</button>
                   <%= button_to 'Delete', employee_path(employee), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-delete' %>
                 </div>
               </td>
