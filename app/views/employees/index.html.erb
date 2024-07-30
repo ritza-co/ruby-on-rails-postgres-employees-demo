@@ -1,2 +1,79 @@
-<h1>Employees#index</h1>
-<p>Find me in app/views/employees/index.html.erb</p>
+<h1>Employee Management System</h1>
+
+<%= form_with(model: @employee, local: true) do |form| %>
+  <%= hidden_field_tag :_method, :patch, disabled: true %>
+
+  <% if @employee.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+      <ul>
+        <% @employee.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :email %>
+    <%= form.email_field :email, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :phone %>
+    <%= form.telephone_field :phone, required: true %>
+  </div>
+
+  <%= form.submit id: 'submit-button' %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.name %></td>
+        <td><%= employee.email %></td>
+        <td><%= employee.phone %></td>
+        <td>
+          <%= link_to 'Edit', '#', onclick: "fillForm('#{employee.id}', '#{employee.name}', '#{employee.email}', '#{employee.phone}')" %>
+          <%= button_to 'Delete', employee_path(employee), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+function fillForm(id, name, email, phone) {
+  const form = document.querySelector('form');
+  form.action = `/employees/${id}`;
+  form.querySelector('input[name="employee[name]"]').value = name;
+  form.querySelector('input[name="employee[email]"]').value = email;
+  form.querySelector('input[name="employee[phone]"]').value = phone;
+  document.getElementById('submit-button').value = 'Update Employee';
+  document.querySelector('input[name="_method"]').disabled = false;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('form');
+  form.addEventListener('submit', function(event) {
+    if (form.action.endsWith('employees')) {
+      document.querySelector('input[name="_method"]').disabled = true;
+      document.getElementById('submit-button').value = 'Create Employee';
+    }
+  });
+});
+</script>
