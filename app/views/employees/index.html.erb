@@ -1,87 +1,88 @@
-<h1>Employee Management System</h1>
+<div class="container">
+  <div class="card">
+    <h2>Add Employee</h2>
+    <%= form_with(model: @employee, local: true, class: "employee-form") do |form| %>
+      <%= hidden_field_tag :_method, :patch, disabled: true %>
 
-<%= form_with(model: @employee, local: true) do |form| %>
-  <%= hidden_field_tag :_method, :patch, disabled: true %>
+      <div class="form-group">
+        <%= form.label :name %>
+        <%= form.text_field :name, required: true %>
+      </div>
 
-  <% if @employee.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
-      <ul>
-        <% @employee.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <div class="form-group">
+        <%= form.label :email %>
+        <%= form.email_field :email, required: true %>
+      </div>
 
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name, required: true %>
-  </div>
+      <div class="form-group">
+        <%= form.label :phone %>
+        <%= form.telephone_field :phone, required: true, pattern: "\+?\d{10,14}", title: "Phone number must be 10-14 digits and may start with '+'" %>
+      </div>
 
-  <div>
-    <%= form.label :email %>
-    <%= form.email_field :email, required: true %>
-  </div>
-
-  <div>
-  <%= form.label :phone %>
-  <%= form.telephone_field :phone, required: true, pattern: "\+?\d{10,14}", title: "Phone number must be 10-14 digits and may start with '+'" %>
-</div>
-
-  <%= form.submit id: 'submit-button' %>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @employees.each do |employee| %>
-      <tr>
-        <td><%= employee.name %></td>
-        <td><%= employee.email %></td>
-        <td><%= employee.phone %></td>
-        <td>
-          <%= link_to 'Edit', '#', onclick: "fillForm('#{employee.id}', '#{employee.name}', '#{employee.email}', '#{employee.phone}')" %>
-          <%= button_to 'Delete', employee_path(employee), method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
+      <%= form.submit 'Add Employee', id: 'submit-button', class: 'btn btn-primary' %>
     <% end %>
-  </tbody>
-</table>
+  </div>
+
+  <div class="card">
+    <h2>Employee List</h2>
+    <div class="table-container">
+      <table class="employee-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employees.each do |employee| %>
+            <tr>
+              <td><%= employee.name %></td>
+              <td><%= employee.email %></td>
+              <td><%= employee.phone %></td>
+              <td>
+                <div class="action-buttons">
+                  <%= link_to 'Edit', '#', onclick: "fillForm('#{employee.id}', '#{employee.name}', '#{employee.email}', '#{employee.phone}')", class: 'btn btn-edit' %>
+                  <%= button_to 'Delete', employee_path(employee), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-delete' %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <script>
 function fillForm(id, name, email, phone) {
-  const form = document.querySelector('form');
+  const form = document.querySelector('.employee-form');
   form.action = `/employees/${id}`;
   form.querySelector('input[name="employee[name]"]').value = name;
   form.querySelector('input[name="employee[email]"]').value = email;
   form.querySelector('input[name="employee[phone]"]').value = phone;
   document.getElementById('submit-button').value = 'Update Employee';
+  document.getElementById('submit-button').textContent = 'Update Employee';
   document.querySelector('input[name="_method"]').disabled = false;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  const form = document.querySelector('form');
+  const form = document.querySelector('.employee-form');
   const phoneInput = form.querySelector('input[name="employee[phone]"]');
   
   form.addEventListener('submit', function(event) {
     if (form.action.endsWith('employees')) {
       document.querySelector('input[name="_method"]').disabled = true;
-      document.getElementById('submit-button').value = 'Create Employee';
+      document.getElementById('submit-button').value = 'Add Employee';
+      document.getElementById('submit-button').textContent = 'Add Employee';
     }
   });
 
   phoneInput.addEventListener('input', function(e) {
-    const phoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-digits
+    const phoneNumber = e.target.value.replace(/\D/g, '');
     if (phoneNumber.length > 14) {
-      e.target.value = phoneNumber.slice(0, 14); // Truncate to 14 digits
+      e.target.value = phoneNumber.slice(0, 14);
     } else {
       e.target.value = phoneNumber;
     }
