@@ -1,182 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0e6ff;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgba(223, 208, 245, 0.98);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  max-width: 1200px;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.91);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 400px; /* Fixed height for containers */
+}
+
+h1, h2 {
+  text-align: center;
+  color: #343a40;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.employee-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.employee-form div {
+  margin-bottom: 15px;
+}
+
+.employee-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #495057;
+}
+
+.employee-form input[type="text"],
+.employee-form input[type="email"],
+.employee-form input[type="tel"] {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.employee-form input[type="submit"] {
+  background-color: #7300ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 18px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.employee-form input[type="submit"]:hover {
+  background-color: #5700b3;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: calc(100% - 70px); /* Subtract the height of the h2 from the container height */
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #dee2e6;
+  background-color: #fff;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f8f9fa;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+th {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-edit {
+  background-color: #17a2b8;
+}
+
+.btn-edit:hover {
+  background-color: #117a8b;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
   }
-  
+
   .container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    padding: 40px 20px;
-    max-width: 1400px;
-    margin: 0 120px; /* Add margin to create spacing on the left and right sides */
-  }
-  
-  .card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-  }
-  
-  .card:first-child {
-    width: 300px;
-    flex-shrink: 0;
-  }
-  
-  .card:last-child {
-    flex-grow: 1;
-    min-width: 0;
-  }
-  
-  h2 {
-    margin-top: 0;
-    color: #333;
+    width: 80%;
     margin-bottom: 20px;
+    height: auto; /* Allow containers to grow on mobile */
+    max-height: 500px; /* Set a maximum height for mobile */
   }
-  
-  .employee-form .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .employee-form label {
-    display: block;
-    margin-bottom: 5px;
-    color: #666;
-  }
-  
-  .employee-form input[type="text"],
-  .employee-form input[type="email"],
-  .employee-form input[type="tel"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .btn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    text-decoration: none;
-    display: inline-block;
-  }
-  
-  .btn-primary {
-    background-color: #7c4dff;
-    color: white;
-    width: 100%;
-  }
-  
-  .btn:hover {
-    opacity: 0.8;
-  }
-  
-  .table-container {
-    overflow-x: auto;
-    max-height: 400px;
-    overflow-y: auto;
-  }
-  
-  .employee-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
-  
-  .employee-table th,
-  .employee-table td {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    hyphens: auto;
-  }
-  
-  .employee-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
-  
-  .employee-table th:nth-child(1),
-  .employee-table td:nth-child(1) {
-    width: 20%;
-    max-width: 150px;
-  }
-  
-  .employee-table th:nth-child(2),
-  .employee-table td:nth-child(2) {
-    width: 35%;
-  }
-  
-  .employee-table th:nth-child(3),
-  .employee-table td:nth-child(3) {
-    width: 20%;
-  }
-  
-  .employee-table th:nth-child(4),
-  .employee-table td:nth-child(4) {
-    width: 25%;
-  }
-  
-  .action-buttons {
-    display: flex;
-    gap: 4px;
-  }
-  
-  .btn-edit {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .btn-delete {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  @media (max-width: 1200px) {
-    .container {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .card:first-child,
-    .card:last-child {
-      width: 100%;
-      max-width: 500px;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .employee-table {
-      font-size: 14px;
-    }
-  
-    .employee-table th,
-    .employee-table td {
-      padding: 8px;
-    }
-  
-    .btn {
-      padding: 6px 10px;
-      font-size: 12px;
-    }
-  
-    .action-buttons {
-      flex-direction: column; /* Stack buttons on top of each other */
-    }
-  }
+}
