@@ -55,7 +55,7 @@ RUN useradd rails --create-home --shell /bin/bash && \
 
 USER rails:rails
 
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["./bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 8080
