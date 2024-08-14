@@ -1,8 +1,31 @@
-#!/bin/bash -e
+#!/bin/bash
+set -e
 
-# If running the rails server then create or migrate existing database
+# Add bundle and other necessary directories to PATH
+export PATH="/usr/local/bundle/bin:$PATH"
+
+# Print debugging information
+echo "Current directory: $(pwd)"
+echo "Contents of current directory: $(ls -la)"
+echo "Ruby version: $(ruby -v)"
+echo "Bundler version: $(bundle -v)"
+echo "Which bundle: $(which bundle)"
+
+# Run database migrations if necessary
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-  ./bin/rails db:prepare
+  echo "Running database migrations..."
+  bundle exec rails db:migrate
 fi
 
-exec "${@}"
+# If running the rails server, use the PORT environment variable if set
+if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+  if [ -n "${PORT:-}" ]; then
+    echo "Starting Rails server on port ${PORT}..."
+    exec bundle exec rails server -p "${PORT}" -b 0.0.0.0
+  else
+    echo "Starting Rails server on port 8080..."
+    exec bundle exec rails server -p 8080 -b 0.0.0.0
+  fi
+else
+  exec "${@}"
+fi
