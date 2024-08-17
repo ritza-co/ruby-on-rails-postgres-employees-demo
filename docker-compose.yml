@@ -19,6 +19,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres@db
       RAILS_ENV: development
+      secret_key_base: 5007f1929b987eb71fa85d9205881d38d58fec20e3b5a9ea517ba823d3131f30430a77179aac260adc5dee50f04b952a0e6fec1dd932ca21ea91f10311b580df
     platform: linux/amd64
 
 volumes:
